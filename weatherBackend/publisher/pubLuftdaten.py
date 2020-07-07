@@ -39,8 +39,8 @@ class PubLuftdaten(Publisher):
 	async def sendLuftdatenInfo(self, data):
 		version = "FeldiWStat"
 
-		#url = "http://api.luftdaten.info/v1/push-sensor-data/"
-		url = "http://localhost:8889/v1/push-sensor-data/"
+		url = "http://api.luftdaten.info/v1/push-sensor-data/"
+		#url = "http://localhost:8889/v1/push-sensor-data/"
 		
 		async with aiohttp.ClientSession() as session:
 			if ("temp" in data) and ("humid" in data) and ("pressure" in data):

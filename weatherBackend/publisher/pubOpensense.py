@@ -47,8 +47,8 @@ class PubOpensense(Publisher):
 			"content-type": "application/json"
 		}
 
-		#url = "https://api.opensensemap.org/boxes/{id}/data".format(id = self.__boxid)
-		url = "http://localhost:8889/boxes/{id}/sensors".format(id = self.__boxid)
+		url = "https://api.opensensemap.org/boxes/{id}/data".format(id = self.__boxid)
+		#url = "http://localhost:8889/boxes/{id}/sensors".format(id = self.__boxid)
 
 		async with aiohttp.ClientSession() as session:
 			await session.request(method = "POST", url = url, headers = headers, json = jsonData)

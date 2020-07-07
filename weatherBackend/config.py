@@ -80,7 +80,10 @@ def _readServicesConfig(cfg):
 def readConfiguration(cfgPath = None):
     if cfgPath == None:
         cfgPath = pathlib.Path(".") / "config.ini"
+    elif type(cfgPath) == str:
+        cfgPath = pathlib.Path(cfgPath)
     cfgPath = cfgPath.resolve()
+    logger.info('Loading config \"%s\"', cfgPath)
     cfg = configparser.ConfigParser()
     if not cfgPath.is_file():
         with cfgPath.open("w") as f:

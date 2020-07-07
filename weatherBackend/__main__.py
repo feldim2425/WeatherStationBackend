@@ -10,8 +10,15 @@ from .config  import readConfiguration
 FORMAT = '[%(asctime)s] [%(levelname)s] [%(name)s] :> %(message)s'
 
 if __name__ == "__main__":
+	
+	# Parsing arguments
+	parser = argparse.ArgumentParser(description='Backend for MQTT Weatherstation')
+	parser.add_argument('--config', '-c', dest='config', default=None, help='Path to configuration INI file')
+	parser.add_argument('--debug', dest='debug', default=False, action='store_true', help='Set logging to debug')
+	args = parser.parse_args()
+
 	# Setup logging
-	logging.basicConfig(level=logging.DEBUG, format=FORMAT)
+	logging.basicConfig(level=(logging.DEBUG if args.debug else logging.INFO), format=FORMAT)
 	logging.getLogger("transitions").setLevel(logging.INFO)
 	logger = logging.getLogger('WeatherBackend')
 	
@@ -30,7 +37,7 @@ if __name__ == "__main__":
 			loop.add_signal_handler(getattr(signal, signame), functools.partial(sigExit, signame))
 
 		# Read and parse the configuration file     
-		configuration = readConfiguration()
+		configuration = readConfiguration(args.config)
 
 		handler = MqttHandler(loop, initializePublishers(configuration['services']), configuration['mqtt'])
 		loop.create_task(handler.run())

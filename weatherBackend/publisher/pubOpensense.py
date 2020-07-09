@@ -44,7 +44,7 @@ class PubOpensense(Publisher):
 			return
 
 		headers = {
-			"content-type": "application/json"
+			"Content-Type": "application/json"
 		}
 
 		url = "https://api.opensensemap.org/boxes/{id}/data".format(id = self.__boxid)

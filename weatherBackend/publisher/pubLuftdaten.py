@@ -23,14 +23,7 @@ class PubLuftdaten(Publisher):
 	"""
 	:param 
 	"""
-	async def handleMessage(self, message):
-		data = None
-		try:
-			data = json.loads(message.payload)
-		except json.JSONDecodeError:
-			logger.log(logging.WARN, "Recieved non json message!")
-			return
-		
+	def handleData(self, data):
 		logger.log(logging.DEBUG, "Recieved valid data")
 		
 		if self.__valid:
@@ -39,9 +32,10 @@ class PubLuftdaten(Publisher):
 	async def sendLuftdatenInfo(self, data):
 		version = "FeldiWStat"
 
-		url = "http://api.luftdaten.info/v1/push-sensor-data/"
+		#url = "http://api.luftdaten.info/v1/push-sensor-data/"
 		#url = "http://localhost:8889/v1/push-sensor-data/"
-		
+		url = "http://api.sensor.community/v1/push-sensor-data/"
+
 		async with aiohttp.ClientSession() as session:
 			if ("temp" in data) and ("humid" in data) and ("pressure" in data):
 				await session.request(method = "POST", url = url, headers = {
@@ -60,7 +54,7 @@ class PubLuftdaten(Publisher):
 				await session.request(method = "POST", url = url, headers = {
 					"content-type": "application/json",
 					"X-Pin": _LUFTDATEN_XPINS['bme280'],
-					"X-Sensor": self.__id
+					"X-Sensor": "27770"
 				}, json = {
 				"software_version": version,
 				"sensordatavalues":[

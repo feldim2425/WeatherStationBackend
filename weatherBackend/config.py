@@ -26,8 +26,14 @@ port = 1883
 weather = weather
 
 [Services]
-## Luftdaten.info enable
+## Luftdaten.info enable (Uses SensorCommunity api)
 luftdateninfo = off
+
+## FeinstaubApp enable (Uses SensorCommunity api)
+fsapp = off
+
+## Madavi enable (Uses SensorCommunity api)
+madavi = off
 
 ## Luftdaten.info sensor id
 ## The API also requires a sensortype like: esp8266, raspi, esp32,...
@@ -66,7 +72,10 @@ def _readServicesConfig(cfg):
     
     cfgServices = cfg['Services']
     config['enable_luftdaten'] = cfgServices.getboolean('luftdateninfo', fallback=False)
-    if config['enable_luftdaten']:
+    config['enable_fsapp'] = cfgServices.getboolean('fsapp', fallback=False)
+    config['enable_madavi'] = cfgServices.getboolean('madavi', fallback=False)
+
+    if config['enable_luftdaten'] or config['enable_fsapp'] or config['enable_madavi']:
         config['luftdaten_id'] = cfgServices.get('luftdateninfo_id', fallback=None)
     
     config['enable_opensensemap'] = cfgServices.getboolean('opensensemap', fallback=False)

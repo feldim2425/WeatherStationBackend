@@ -45,7 +45,7 @@ class PubLuftdaten(Publisher):
 				"sensordatavalues":[
 					{"value_type":"temperature","value":"{val:.2f}".format(val=data["temp"])},
 					{"value_type":"humidity","value":"{val:.2f}".format(val=data["humid"])},
-					{"value_type":"pressure","value":"{val:.2f}".format(val=data["pressure"] * 10000)}
+					{"value_type":"pressure","value":"{val:.2f}".format(val=data["pressure"] * 100)}
 				]})
 			
 			if ("pm25" in data) and ("pm10" in data):

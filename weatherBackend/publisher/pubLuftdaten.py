@@ -30,7 +30,6 @@ class PubLuftdaten(Publisher):
 			asyncio.ensure_future(self.sendLuftdatenInfo(data))
 
 	async def sendLuftdatenInfo(self, data):
-		version = "FeldiWStat"
 
 		#url = "http://api.luftdaten.info/v1/push-sensor-data/"
 		#url = "http://localhost:8889/v1/push-sensor-data/"
@@ -43,7 +42,6 @@ class PubLuftdaten(Publisher):
 					"X-Pin": _LUFTDATEN_XPINS['sds011'],
 					"X-Sensor": self.__id
 				}, json = {
-				"software_version": version,
 				"sensordatavalues":[
 					{"value_type":"temperature","value":"{val:.2f}".format(val=data["temp"])},
 					{"value_type":"humidity","value":"{val:.2f}".format(val=data["humid"])},
@@ -54,9 +52,8 @@ class PubLuftdaten(Publisher):
 				await session.request(method = "POST", url = url, headers = {
 					"content-type": "application/json",
 					"X-Pin": _LUFTDATEN_XPINS['bme280'],
-					"X-Sensor": "27770"
+					"X-Sensor": self.__id
 				}, json = {
-				"software_version": version,
 				"sensordatavalues":[
 					{"value_type":"P1","value":"{val:.2f}".format(val=data["pm10"])},
 					{"value_type":"P2","value":"{val:.2f}".format(val=data["pm25"])}

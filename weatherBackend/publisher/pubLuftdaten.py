@@ -39,7 +39,7 @@ class PubLuftdaten(Publisher):
 			if ("temp" in data) and ("humid" in data) and ("pressure" in data):
 				await session.request(method = "POST", url = url, headers = {
 					"content-type": "application/json",
-					"X-Pin": _LUFTDATEN_XPINS['sds011'],
+					"X-Pin": _LUFTDATEN_XPINS['bme280'],
 					"X-Sensor": self.__id
 				}, json = {
 				"sensordatavalues":[
@@ -51,7 +51,7 @@ class PubLuftdaten(Publisher):
 			if ("pm25" in data) and ("pm10" in data):
 				await session.request(method = "POST", url = url, headers = {
 					"content-type": "application/json",
-					"X-Pin": _LUFTDATEN_XPINS['bme280'],
+					"X-Pin": _LUFTDATEN_XPINS['sds011'],
 					"X-Sensor": self.__id
 				}, json = {
 				"sensordatavalues":[
